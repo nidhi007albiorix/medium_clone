@@ -1,7 +1,7 @@
 import { Entity ,PrimaryColumn,Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from "typeorm";
 import { User } from "./User";
 
-@Entity()
+@Entity('articles')
 export class Article {
     @PrimaryColumn( {length:30})
     slug:string

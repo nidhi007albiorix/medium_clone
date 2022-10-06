@@ -44,6 +44,6 @@ __decorate([
     __metadata("design:type", User_1.User)
 ], Article.prototype, "author", void 0);
 Article = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('articles')
 ], Article);
 exports.Article = Article;
