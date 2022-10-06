@@ -14,6 +14,7 @@ export class Article {
 
     @Column ({type:'text'})
     body:string
+   
     @CreateDateColumn()
     createdAt:Date
 

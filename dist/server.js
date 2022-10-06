@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const Article_1 = require("./entities/Article");
 const User_1 = require("./entities/User");
+const articles_1 = require("./routes/articles");
 const user_1 = require("./routes/user");
 const users_1 = require("./routes/users");
 const app = (0, express_1.default)();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", users_1.usersRoute);
 app.use("/api/user", user_1.userRoute);
+app.use("/api/articles", articles_1.articleRoute);
 const port = 3232;
 function start() {
     return __awaiter(this, void 0, void 0, function* () {

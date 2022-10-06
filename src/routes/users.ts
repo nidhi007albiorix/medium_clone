@@ -28,7 +28,7 @@ route.post('/login',async(req:Request,res:Response)=>{
       email: req.body.email,
       password:req.body.password
     });
-    console.log(user)
+
     return res.status(201).json(user)
   } catch (error) {
 
