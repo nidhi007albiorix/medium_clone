@@ -22,7 +22,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "userName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    (0, typeorm_1.Column)({ type: "text", nullable: false }),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "bio", void 0);
 __decorate([
@@ -38,6 +42,6 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
 User = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('users')
 ], User);
 exports.User = User;

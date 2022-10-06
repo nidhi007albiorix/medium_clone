@@ -16,33 +16,31 @@ const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const Article_1 = require("./entities/Article");
 const User_1 = require("./entities/User");
+const user_1 = require("./routes/user");
+const users_1 = require("./routes/users");
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
 app.get("/", (req, res) => {
     res.send("Hello word");
 });
+app.use("/api/users", users_1.usersRoute);
+app.use("/api/user", user_1.userRoute);
 const port = 3232;
-const AppDataSource = new typeorm_1.DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "medium_user",
-    password: "medium_clone",
-    database: "medium_clone",
-    entities: [Article_1.Article, User_1.User],
-    synchronize: true,
-    logging: true,
-});
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield AppDataSource.initialize()
-            .then(() => {
-            console.log("Data Source has been initialized!");
-        })
-            .catch((err) => {
-            console.error("Error during Data Source initialization", err);
+        yield (0, typeorm_1.createConnection)({
+            type: "postgres",
+            host: "localhost",
+            port: 5432,
+            username: "medium_user",
+            password: "medium_clone",
+            database: "medium_clone",
+            entities: [Article_1.Article, User_1.User],
+            synchronize: true,
+            logging: true,
         });
-        app.listen(port, () => {
-            console.log("Server started at :", port);
+        app.listen(3232, () => {
+            console.log("Server started on http://localhost:3232");
         });
     });
 }
