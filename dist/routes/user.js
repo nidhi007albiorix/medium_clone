@@ -15,13 +15,15 @@ const users_1 = require("../controllers/users");
 const auth_1 = require("../middleware/auth");
 const route = (0, express_1.Router)();
 route.get("/", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.user) {
+    try {
         const user = yield (0, users_1.getUserByEmail)(req.user.email);
+        if (!user)
+            throw new Error("No such user found");
         return res.status(200).json({ user });
     }
-    else {
+    catch (error) {
         return res.status(404).json({
-            error: { body: ['No such user found'] }
+            error: { body: ["No such user found"] },
         });
     }
 }));

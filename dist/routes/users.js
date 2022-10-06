@@ -36,7 +36,6 @@ route.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* (
             email: req.body.email,
             password: req.body.password
         });
-        console.log(user);
         return res.status(201).json(user);
     }
     catch (error) {
