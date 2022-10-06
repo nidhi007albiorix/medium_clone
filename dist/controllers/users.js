@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.createUser = void 0;
+exports.getUserByEmail = exports.loginUser = exports.createUser = void 0;
 const User_1 = require("../entities/User");
 const typeorm_1 = require("typeorm");
 const password_1 = require("../utils/password");
@@ -40,7 +40,6 @@ function loginUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         const repo = (0, typeorm_1.getRepository)(User_1.User);
         const existingUser = yield repo.findOne({ where: { email: data.email } });
-        console.log(existingUser);
         if (!existingUser)
             throw new Error("User does not exist");
         try {
@@ -58,3 +57,18 @@ function loginUser(data) {
     });
 }
 exports.loginUser = loginUser;
+function getUserByEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const repo = (0, typeorm_1.getRepository)(User_1.User);
+        try {
+            const user = yield repo.findOne({ where: { email: email } });
+            if (!user)
+                throw new Error("User does not exist");
+            return (0, security_1.sanitizeFeilds)(user);
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.getUserByEmail = getUserByEmail;
