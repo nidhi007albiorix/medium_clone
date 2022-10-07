@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
+import { Article } from "./Article";
 
 @Entity('users')
 export class User {
@@ -21,6 +23,8 @@ export class User {
   @Column({ nullable: true })
   image?: string;
 
+  @OneToMany(()=>Article,(article) => article.author)
+  article: Article[];
   @CreateDateColumn()
   createdAt?: Date;
 
