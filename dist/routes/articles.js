@@ -75,7 +75,6 @@ route.post("/", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, fun
 route.patch("/:slug", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const article = yield (0, articles_1.updateArticle)(req.params.slug, req.body.article);
-        console.log(article);
         return res.status(201).json(article);
     }
     catch (error) {
