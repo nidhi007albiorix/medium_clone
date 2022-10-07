@@ -4,6 +4,8 @@ import {
   deleteArticle,
   getAllArticles,
   getArticleBySlug,
+  getFeedArticles,
+  updateArticle,
 } from "../controllers/articles";
 import { auth } from "../middleware/auth";
 const route = Router();
@@ -25,7 +27,18 @@ route.get("/", auth, async (req: Request, res: Response) => {
 });
 
 // feed articles
-route.get("/feeds", auth, async (req: Request, res: Response) => {});
+route.get("/feeds", auth, async (req: Request, res: Response) => {
+  try {
+    const article = await getFeedArticles((req as any).user.email);
+    return res.status(201).json(article);
+  } catch (error) {
+    return res.status(422).send({
+      errors: {
+        body: "Could not find articles",
+      },
+    });
+  }
+});
 
 // article by slug
 route.get("/:slug", async (req: Request, res: Response) => {
@@ -60,7 +73,19 @@ route.post("/", auth, async (req: Request, res: Response) => {
 });
 
 // update an article
-route.patch("/:slug", async (req: Request, res: Response) => {});
+route.patch("/:slug", auth, async (req: Request, res: Response) => {
+  try {
+    const article = await updateArticle(req.params.slug, req.body.article);
+
+    return res.status(201).json(article);
+  } catch (error) {
+    return res.status(422).send({
+      errors: {
+        body: "Could not update article",
+      },
+    });
+  }
+});
 
 // delete an article
 route.delete("/:slug", async (req: Request, res: Response) => {

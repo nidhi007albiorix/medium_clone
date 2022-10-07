@@ -30,7 +30,19 @@ route.get("/", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 // feed articles
-route.get("/feeds", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+route.get("/feeds", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const article = yield (0, articles_1.getFeedArticles)(req.user.email);
+        return res.status(201).json(article);
+    }
+    catch (error) {
+        return res.status(422).send({
+            errors: {
+                body: "Could not find articles",
+            },
+        });
+    }
+}));
 // article by slug
 route.get("/:slug", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -60,7 +72,20 @@ route.post("/", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // update an article
-route.patch("/:slug", (req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+route.patch("/:slug", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const article = yield (0, articles_1.updateArticle)(req.params.slug, req.body.article);
+        console.log(article);
+        return res.status(201).json(article);
+    }
+    catch (error) {
+        return res.status(422).send({
+            errors: {
+                body: "Could not update article",
+            },
+        });
+    }
+}));
 // delete an article
 route.delete("/:slug", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

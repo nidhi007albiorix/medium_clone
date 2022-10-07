@@ -9,6 +9,14 @@ interface ArticleData {
   description: string;
   //   tags: [string];
   body: string;
+  author: User;
+}
+
+interface ArticleDataUpdate {
+  title?: string;
+  description?: string;
+  //   tags: [string];
+  body?: string;
 }
 export async function createArticle(
   data: ArticleData,
@@ -36,16 +44,30 @@ export async function createArticle(
   }
 }
 
-// export async function updateArticle(data: Partial(ArticleData)): Promise<Article> {
+export async function updateArticle(
+  slug: string,
+  data: ArticleDataUpdate
+): Promise<ArticleData> {
+  const articleRepo = getRepository(Article);
+  try {
+    const property = await articleRepo.findOne({
+      where: { slug: slug },
+    });
 
-// }
+    const article = await articleRepo.save({ ...property, ...data });
+    if (!article) throw new Error("User does not exist");
+    return article as ArticleData;
+  } catch (error) {
+    throw error;
+  }
+}
 export async function deleteArticle(slug: string): Promise<Boolean> {
   const articleRepo = getRepository(Article);
   try {
     const article = await articleRepo.delete(slug);
     if (!article) throw new Error("User does not exist");
 
-    return true
+    return true;
   } catch (error) {
     throw error;
   }
@@ -61,24 +83,31 @@ export async function getAllArticles(): Promise<ArticleData[]> {
     throw error;
   }
 }
-// export async function getFeedArticles(email: string): Promise<ArticleData[]> {
-//     const articleRepo = getRepository(Article);
-//     try {
-//         const article = await articleRepo.find({ where: { author.email: email } });
-//         if (!article) throw new Error("User does not exist");
+export async function getFeedArticles(email: string): Promise<ArticleData[]> {
+  const articleRepo = getRepository(Article);
+  try {
+    const article = await articleRepo.find({
+      where: {
+        author: { email: email },
+      },
+    });
+    if (!article) throw new Error("User does not exist");
 
-//         return article as ArticleData[];
-//       } catch (error) {
-//         throw error;
-//       }
-// }
+    return article as ArticleData[];
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function getArticleBySlug(slug: string): Promise<ArticleData> {
   const articleRepo = getRepository(Article);
   try {
-    const article = await articleRepo.findOne({ where: { slug: slug } });
+    const article = await articleRepo.findOne({
+      where: { slug: slug },
+      relations: ["author"],
+    });
     if (!article) throw new Error("User does not exist");
-
+    article.author = sanitizeFeilds(article.author);
     return article as ArticleData;
   } catch (error) {
     throw error;

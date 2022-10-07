@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getArticleBySlug = exports.getAllArticles = exports.deleteArticle = exports.createArticle = void 0;
+exports.getArticleBySlug = exports.getFeedArticles = exports.getAllArticles = exports.deleteArticle = exports.updateArticle = exports.createArticle = void 0;
 const typeorm_1 = require("typeorm");
 const Article_1 = require("../entities/Article");
 const User_1 = require("../entities/User");
@@ -45,8 +45,24 @@ function createArticle(data, email) {
     });
 }
 exports.createArticle = createArticle;
-// export async function updateArticle(data: Partial(ArticleData)): Promise<Article> {
-// }
+function updateArticle(slug, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const articleRepo = (0, typeorm_1.getRepository)(Article_1.Article);
+        try {
+            const property = yield articleRepo.findOne({
+                where: { slug: slug },
+            });
+            const article = yield articleRepo.save(Object.assign(Object.assign({}, property), data));
+            if (!article)
+                throw new Error("User does not exist");
+            return article;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.updateArticle = updateArticle;
 function deleteArticle(slug) {
     return __awaiter(this, void 0, void 0, function* () {
         const articleRepo = (0, typeorm_1.getRepository)(Article_1.Article);
@@ -77,23 +93,36 @@ function getAllArticles() {
     });
 }
 exports.getAllArticles = getAllArticles;
-// export async function getFeedArticles(email: string): Promise<ArticleData[]> {
-//     const articleRepo = getRepository(Article);
-//     try {
-//         const article = await articleRepo.find({ where: { author.email: email } });
-//         if (!article) throw new Error("User does not exist");
-//         return article as ArticleData[];
-//       } catch (error) {
-//         throw error;
-//       }
-// }
+function getFeedArticles(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const articleRepo = (0, typeorm_1.getRepository)(Article_1.Article);
+        try {
+            const article = yield articleRepo.find({
+                where: {
+                    author: { email: email },
+                },
+            });
+            if (!article)
+                throw new Error("User does not exist");
+            return article;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.getFeedArticles = getFeedArticles;
 function getArticleBySlug(slug) {
     return __awaiter(this, void 0, void 0, function* () {
         const articleRepo = (0, typeorm_1.getRepository)(Article_1.Article);
         try {
-            const article = yield articleRepo.findOne({ where: { slug: slug } });
+            const article = yield articleRepo.findOne({
+                where: { slug: slug },
+                relations: ["author"],
+            });
             if (!article)
                 throw new Error("User does not exist");
+            article.author = (0, security_1.sanitizeFeilds)(article.author);
             return article;
         }
         catch (error) {
