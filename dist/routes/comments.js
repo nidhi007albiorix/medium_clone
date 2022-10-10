@@ -42,3 +42,30 @@ route.post("/:slug", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0
         });
     }
 }));
+route.patch("/:id", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const comment = yield (0, comments_1.updateComment)(req.params.id, req.body.comment);
+        return res.status(201).json(comment);
+    }
+    catch (error) {
+        return res.status(422).send({
+            errors: {
+                body: "Could not update comment",
+            },
+        });
+    }
+}));
+// delete an comment
+route.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, comments_1.deleteComment)(req.params.id);
+        return res.status(201).json({ message: "Successfully deleted" });
+    }
+    catch (error) {
+        return res.status(422).send({
+            errors: {
+                body: "Could not delete comment",
+            },
+        });
+    }
+}));

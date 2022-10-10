@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createComment = void 0;
+exports.deleteComment = exports.updateComment = exports.createComment = void 0;
 const typeorm_1 = require("typeorm");
 const Article_1 = require("../entities/Article");
 const Comment_1 = require("../entities/Comment");
@@ -32,7 +32,6 @@ function createComment(data, email, slug) {
                 (comment.article = article),
                 // article.tags= data.tags,
                 (comment.user = (0, security_1.sanitizeFeilds)(user));
-            console.log(comment);
             yield commentRepo.save(comment);
             return comment;
         }
@@ -43,4 +42,39 @@ function createComment(data, email, slug) {
 }
 exports.createComment = createComment;
 // export async function getArticleComment(slug: string): Promise<commentData> {
+//   try {
+//   } catch (error) {}
 // }
+function updateComment(id, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const commentRepo = (0, typeorm_1.getRepository)(Comment_1.Comment);
+        try {
+            const property = yield commentRepo.findOne({
+                where: { id: id },
+            });
+            const comment = yield commentRepo.save(Object.assign(Object.assign({}, property), data));
+            if (!comment)
+                throw new Error("Comment does not exist");
+            return comment;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.updateComment = updateComment;
+function deleteComment(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const commentRepo = (0, typeorm_1.getRepository)(Comment_1.Comment);
+        try {
+            const comment = yield commentRepo.delete(id);
+            if (!comment)
+                throw new Error("User does not exist");
+            return true;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.deleteComment = deleteComment;
