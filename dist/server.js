@@ -15,8 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const Article_1 = require("./entities/Article");
+const Comment_1 = require("./entities/Comment");
 const User_1 = require("./entities/User");
 const articles_1 = require("./routes/articles");
+const comments_1 = require("./routes/comments");
 const user_1 = require("./routes/user");
 const users_1 = require("./routes/users");
 const app = (0, express_1.default)();
@@ -27,6 +29,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", users_1.usersRoute);
 app.use("/api/user", user_1.userRoute);
 app.use("/api/articles", articles_1.articleRoute);
+app.use("/api/comments", comments_1.commentRoute);
 const port = 3232;
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -37,7 +40,7 @@ function start() {
             username: "medium_user",
             password: "medium_clone",
             database: "medium_clone",
-            entities: [Article_1.Article, User_1.User],
+            entities: [Article_1.Article, User_1.User, Comment_1.Comment],
             synchronize: true,
             logging: true,
         });
