@@ -16,18 +16,19 @@ const auth_1 = require("../middleware/auth");
 const route = (0, express_1.Router)();
 exports.commentRoute = route;
 // // article comments
-// route.get("/article-comments/:slug", auth, async (req: Request, res: Response) => {
-//     try {
-//         const comments = await getArticleComment(req.params.slug);
-//         return res.status(201).json(comments);
-//       } catch (error) {
-//         return res.status(422).send({
-//           errors: {
-//             body: "Could not find comments",
-//           },
-//         });
-//       }
-// })
+route.get("/:slug", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const comments = yield (0, comments_1.getArticleComment)(req.params.slug);
+        return res.status(201).json(comments);
+    }
+    catch (error) {
+        return res.status(422).send({
+            errors: {
+                body: "Could not find comments",
+            },
+        });
+    }
+}));
 // post comments
 route.post("/:slug", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

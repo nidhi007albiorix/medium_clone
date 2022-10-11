@@ -11,7 +11,6 @@ interface commentData {
 }
 interface commentUpdateData {
   body: string;
-
 }
 export async function createComment(
   data: commentData,
@@ -39,18 +38,24 @@ export async function createComment(
   }
 }
 
-export async function getArticleComment(slug: string): Promise<commentData> {
+export async function getArticleComment(slug: string): Promise<commentData[]> {
   const commentRepo = getRepository(Comment);
-
   try {
-
-
+    const comment = await commentRepo.find({
+      where: {
+        article: { slug: slug },
+      },
+    });
+    if (!comment) throw new Error("Comments does not exist");
+    return comment as commentData[];
   } catch (error) {
-
-
+    throw error;
   }
 }
-export async function updateComment(id: string,data:commentUpdateData): Promise<commentData> {
+export async function updateComment(
+  id: string,
+  data: commentUpdateData
+): Promise<commentData> {
   const commentRepo = getRepository(Comment);
   try {
     const property = await commentRepo.findOne({
