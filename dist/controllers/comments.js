@@ -44,8 +44,6 @@ exports.createComment = createComment;
 function getArticleComment(slug) {
     return __awaiter(this, void 0, void 0, function* () {
         const commentRepo = (0, typeorm_1.getRepository)(Comment_1.Comment);
-        const articleRepo = (0, typeorm_1.getRepository)(Article_1.Article);
-        const article = yield articleRepo.findOne({ where: { slug: slug } });
         try {
             const comment = yield commentRepo.find({
                 where: {

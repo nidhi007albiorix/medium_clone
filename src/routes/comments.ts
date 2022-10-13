@@ -54,7 +54,7 @@ route.patch("/:id", auth, async (req: Request, res: Response) => {
 });
 
 
-// delete an comment
+// delete a comment
 route.delete("/:id", async (req: Request, res: Response) => {
   try {
     await deleteComment(req.params.id);
