@@ -56,7 +56,7 @@ route.patch("/:id", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0,
         });
     }
 }));
-// delete an comment
+// delete a comment
 route.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, comments_1.deleteComment)(req.params.id);

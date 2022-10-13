@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { createConnection, DataSource } from "typeorm";
+import  cors from "cors";
 import { Article } from "./entities/Article";
 import { Comment } from "./entities/Comment";
 import { User } from "./entities/User";
@@ -9,6 +10,9 @@ import { userRoute } from "./routes/user";
 import { usersRoute } from "./routes/users";
 const app = express();
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello word");
 });
