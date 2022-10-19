@@ -43,6 +43,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", User_1.User)
 ], Article.prototype, "author", void 0);
+__decorate([
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", Article)
+], Article.prototype, "comments", void 0);
 Article = __decorate([
     (0, typeorm_1.Entity)('articles')
 ], Article);

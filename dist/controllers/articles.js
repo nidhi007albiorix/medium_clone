@@ -102,6 +102,7 @@ function getFeedArticles(email) {
                     author: { email: email },
                 },
             });
+            // article.totalComments=length(article.comments)
             if (!article)
                 throw new Error("User does not exist");
             return article;

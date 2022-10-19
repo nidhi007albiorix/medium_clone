@@ -24,5 +24,6 @@ export class Article {
     @ManyToOne(()=>User)
     @JoinColumn()
     author:User
-
+    @JoinColumn()
+    comments:Article
 }

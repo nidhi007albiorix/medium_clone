@@ -12,7 +12,7 @@ const route = Router();
 export const articleRoute = route;
 
 // list articles
-route.get("/", auth, async (req: Request, res: Response) => {
+route.get("/", async (req: Request, res: Response) => {
   try {
     const articles = await getAllArticles();
 

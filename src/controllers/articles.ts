@@ -91,6 +91,7 @@ export async function getFeedArticles(email: string): Promise<ArticleData[]> {
         author: { email: email },
       },
     });
+    // article.totalComments=length(article.comments)
     if (!article) throw new Error("User does not exist");
 
     return article as ArticleData[];

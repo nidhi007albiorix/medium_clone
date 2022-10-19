@@ -19,9 +19,9 @@ function auth(req, res, next) {
             return res.status(401).json({
                 errors: { body: ['Authorization failed', 'No Authorization header'] }
             });
-        if (authHeader[0] != 'Token')
+        if (authHeader[0] != 'Bearer')
             return res.status(401).json({
-                errors: { body: ['Authorization failed', 'Token is missing'] }
+                errors: { body: ['Authorization failed', 'Bearer is missing'] }
             });
         const token = authHeader[1];
         try {

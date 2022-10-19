@@ -16,7 +16,7 @@ const auth_1 = require("../middleware/auth");
 const route = (0, express_1.Router)();
 exports.articleRoute = route;
 // list articles
-route.get("/", auth_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const articles = yield (0, articles_1.getAllArticles)();
         return res.status(201).json(articles);
