@@ -6,7 +6,7 @@ import { sanitizeFeilds } from "../utils/security";
 
 interface commentData {
   body: string;
-  user: User;
+  userComment: User;
   article: Article;
 }
 interface commentUpdateData {
@@ -29,7 +29,7 @@ export async function createComment(
     (comment.body = data.body),
       (comment.article = article),
       // article.tags= data.tags,
-      (comment.user = sanitizeFeilds(user));
+      (comment.userComment = sanitizeFeilds(user));
 
     await commentRepo.save(comment);
     return comment as commentData;
@@ -40,13 +40,17 @@ export async function createComment(
 
 export async function getArticleComment(slug: string): Promise<commentData[]> {
   const commentRepo = getRepository(Comment);
+
   try {
     const comment = await commentRepo.find({
-      where: {
-        article: { slug: slug },
-      },
+      where: { article: { slug: slug } },
+      relations: ["userComment"],
+    });
+    comment.map((item) => {
+      item.userComment = sanitizeFeilds(item.userComment);
     });
     if (!comment) throw new Error("Comments does not exist");
+
     return comment as commentData[];
   } catch (error) {
     throw error;

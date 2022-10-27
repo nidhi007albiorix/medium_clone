@@ -1,4 +1,5 @@
 import { Entity ,PrimaryColumn,Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from "typeorm";
+import { Comment } from "./Comment";
 import { User } from "./User";
 
 @Entity('articles')
@@ -25,5 +26,5 @@ export class Article {
     @JoinColumn()
     author:User
     @JoinColumn()
-    comments:Article
+    comments:Comment
 }

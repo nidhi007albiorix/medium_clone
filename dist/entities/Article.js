@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Article = void 0;
 const typeorm_1 = require("typeorm");
+const Comment_1 = require("./Comment");
 const User_1 = require("./User");
 let Article = class Article {
 };
@@ -45,7 +46,7 @@ __decorate([
 ], Article.prototype, "author", void 0);
 __decorate([
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Article)
+    __metadata("design:type", Comment_1.Comment)
 ], Article.prototype, "comments", void 0);
 Article = __decorate([
     (0, typeorm_1.Entity)('articles')

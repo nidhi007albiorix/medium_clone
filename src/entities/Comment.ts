@@ -13,7 +13,7 @@ export class Comment {
 
     @ManyToOne(()=>User)
     @JoinColumn()
-    user:User
+    userComment:User
 
     @ManyToOne(()=>Article)
     @JoinColumn()

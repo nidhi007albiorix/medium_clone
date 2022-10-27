@@ -31,7 +31,7 @@ function createComment(data, email, slug) {
             (comment.body = data.body),
                 (comment.article = article),
                 // article.tags= data.tags,
-                (comment.user = (0, security_1.sanitizeFeilds)(user));
+                (comment.userComment = (0, security_1.sanitizeFeilds)(user));
             yield commentRepo.save(comment);
             return comment;
         }
@@ -46,9 +46,11 @@ function getArticleComment(slug) {
         const commentRepo = (0, typeorm_1.getRepository)(Comment_1.Comment);
         try {
             const comment = yield commentRepo.find({
-                where: {
-                    article: { slug: slug },
-                },
+                where: { article: { slug: slug } },
+                relations: ["userComment"],
+            });
+            comment.map((item) => {
+                item.userComment = (0, security_1.sanitizeFeilds)(item.userComment);
             });
             if (!comment)
                 throw new Error("Comments does not exist");

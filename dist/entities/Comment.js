@@ -28,7 +28,7 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => User_1.User),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", User_1.User)
-], Comment.prototype, "user", void 0);
+], Comment.prototype, "userComment", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => Article_1.Article),
     (0, typeorm_1.JoinColumn)(),

@@ -15,7 +15,7 @@ interface UserLoginData {
 }
 
 export async function createUser(data: UserSignUpData): Promise<User> {
-  const repo = getRepository(User);
+  const repo:any = getRepository(User);
   const existingUser = await repo.findOne({ where: { email: data.email } });
   if (existingUser) throw new Error("User already exists");
   try {

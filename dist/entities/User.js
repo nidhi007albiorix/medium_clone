@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const Article_1 = require("./Article");
+const Comment_1 = require("./Comment");
 let User = class User {
 };
 __decorate([
@@ -38,6 +39,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Article_1.Article, (article) => article.author),
     __metadata("design:type", Array)
 ], User.prototype, "article", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Comment_1.Comment, (comment) => comment.userComment),
+    __metadata("design:type", Array)
+], User.prototype, "comment", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
