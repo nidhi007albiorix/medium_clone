@@ -25,7 +25,7 @@ const users_1 = require("./routes/users");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:3000'
+    origin: "http://localhost:3000",
 }));
 app.get("/", (req, res) => {
     res.send("Hello word");
@@ -35,15 +35,18 @@ app.use("/api/user", user_1.userRoute);
 app.use("/api/articles", articles_1.articleRoute);
 app.use("/api/comments", comments_1.commentRoute);
 const port = 3232;
+console.log(process.env.HOST);
+console.log(process.env.USERNAME);
+console.log(process.env.DATABASE);
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         yield (0, typeorm_1.createConnection)({
             type: "postgres",
-            host: "localhost",
-            port: 5432,
-            username: "medium_user",
-            password: "medium_clone",
-            database: "medium_clone",
+            host: process.env.HOST,
+            port: Number(process.env.PORT),
+            username: process.env.USERNAME || undefined,
+            password: process.env.PASSWORD || undefined,
+            database: process.env.DATABASE || undefined,
             entities: [Article_1.Article, User_1.User, Comment_1.Comment],
             synchronize: true,
             logging: true,
