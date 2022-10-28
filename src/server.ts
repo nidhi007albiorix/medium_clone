@@ -12,21 +12,11 @@ import dotenv from 'dotenv';// see https://github.com/motdotla/dotenv#how-do-i-u
 dotenv.config()
 const app = express();
 app.use(express.json());
-var whitelist =["http://localhost:3000","https://fdbdeca5.medium-clone-frontend.pages.dev/"]
 app.use(
   cors({
-    origin:function (origin:any, callback:any) {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
-    
-    optionsSuccessStatus: 200 
+    origin: "https://fdbdeca5.medium-clone-frontend.pages.dev"
   })
 );
-
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello word");
 });
