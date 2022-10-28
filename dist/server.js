@@ -60,9 +60,6 @@ app.use("/api/user", user_1.userRoute);
 app.use("/api/articles", articles_1.articleRoute);
 app.use("/api/comments", comments_1.commentRoute);
 const port = 3232;
-console.log(process.env.HOST);
-console.log(process.env.USERNAMEDB);
-console.log(process.env.DATABASE);
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         yield (0, typeorm_1.createConnection)({
