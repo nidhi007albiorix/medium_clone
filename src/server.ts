@@ -37,7 +37,7 @@ async function start() {
     entities: [Article, User, Comment],
     synchronize: true,
     logging: true,
-    ssl: false
+    ssl: { "rejectUnauthorized": false }
   });
   app.listen(process.env.PORT, () => {
     console.log(`Server started on http://localhost:${process.env.PORT}`);
