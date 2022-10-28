@@ -42,7 +42,7 @@ function start() {
         yield (0, typeorm_1.createConnection)({
             type: "postgres",
             host: process.env.HOST,
-            port: Number(process.env.PORT),
+            port: Number(process.env.DBPORT),
             username: process.env.USERNAMEDB || undefined,
             password: process.env.PASSWORD || undefined,
             database: process.env.DATABASE || undefined,
@@ -50,8 +50,8 @@ function start() {
             synchronize: true,
             logging: true,
         });
-        app.listen(3232, () => {
-            console.log("Server started on http://localhost:3232");
+        app.listen(process.env.PORT, () => {
+            console.log(`Server started on http://localhost:${process.env.PORT}`);
         });
     });
 }

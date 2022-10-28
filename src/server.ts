@@ -30,7 +30,7 @@ async function start() {
   await createConnection({
     type: "postgres",
     host: process.env.HOST as string,
-    port: Number(process.env.PORT),
+    port: Number(process.env.DBPORT),
     username: process.env.USERNAMEDB as string || undefined,
     password: process.env.PASSWORD as string || undefined,
     database: process.env.DATABASE as string || undefined,
@@ -38,8 +38,8 @@ async function start() {
     synchronize: true,
     logging: true,
   });
-  app.listen(3232, () => {
-    console.log("Server started on http://localhost:3232");
+  app.listen(process.env.PORT, () => {
+    console.log(`Server started on http://localhost:${process.env.PORT}`);
   });
 }
 
