@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -22,6 +45,8 @@ const articles_1 = require("./routes/articles");
 const comments_1 = require("./routes/comments");
 const user_1 = require("./routes/user");
 const users_1 = require("./routes/users");
+const dotenv = __importStar(require("dotenv")); // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
@@ -36,7 +61,7 @@ app.use("/api/articles", articles_1.articleRoute);
 app.use("/api/comments", comments_1.commentRoute);
 const port = 3232;
 console.log(process.env.HOST);
-console.log(process.env.USERNAME);
+console.log(process.env.USERNAMEDB);
 console.log(process.env.DATABASE);
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -44,7 +69,7 @@ function start() {
             type: "postgres",
             host: process.env.HOST,
             port: Number(process.env.PORT),
-            username: process.env.USERNAME || undefined,
+            username: process.env.USERNAMEDB || undefined,
             password: process.env.PASSWORD || undefined,
             database: process.env.DATABASE || undefined,
             entities: [Article_1.Article, User_1.User, Comment_1.Comment],

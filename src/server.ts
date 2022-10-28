@@ -8,6 +8,8 @@ import { articleRoute } from "./routes/articles";
 import { commentRoute } from "./routes/comments";
 import { userRoute } from "./routes/user";
 import { usersRoute } from "./routes/users";
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 const app = express();
 app.use(express.json());
 app.use(
@@ -24,15 +26,12 @@ app.use("/api/articles", articleRoute);
 app.use("/api/comments", commentRoute);
 
 const port = 3232;
-console.log(process.env.HOST as string)
-console.log( process.env.USERNAME as string)
-console.log( process.env.DATABASE as string)
 async function start() {
   await createConnection({
     type: "postgres",
     host: process.env.HOST as string,
     port: Number(process.env.PORT),
-    username: process.env.USERNAME as string || undefined,
+    username: process.env.USERNAMEDB as string || undefined,
     password: process.env.PASSWORD as string || undefined,
     database: process.env.DATABASE as string || undefined,
     entities: [Article, User, Comment],
