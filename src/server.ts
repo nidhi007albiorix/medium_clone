@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://fdbdeca5.medium-clone-frontend.pages.dev"
+    origin: ".medium-clone-frontend.pages.dev"
   })
 );
 app.get("/", (req: Request, res: Response) => {
