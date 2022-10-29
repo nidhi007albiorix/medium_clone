@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ".medium-clone-frontend.pages.dev"
+    origin: "https://medium-clone-frontend.pages.dev/"
   })
 );
 app.get("/", (req: Request, res: Response) => {
