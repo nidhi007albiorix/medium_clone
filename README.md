@@ -4,7 +4,7 @@ Medium clone
 1. node.js
 2. Typescript
 3. PostgresSQL
-4. TypeDRM- ORM
+4. TypeORM- ORM
 
 ## Database setup
 1. Enter 'psql' as admin
